@@ -27,8 +27,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".EmojiListActivity"
-                  android:label="Dump all emoji">
+        <activity android:name=".CodePointEditor"
+            android:label="Code point editor">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.example.emojidumpapp" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".EmojiListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
