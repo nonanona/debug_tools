@@ -5,6 +5,7 @@ import android.graphics.*
 import android.os.Bundle
 import android.text.*
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -25,15 +26,16 @@ class EmojiDiffActivity : AppCompatActivity() {
     class Holder(val view: ViewGroup) : RecyclerView.ViewHolder(view)
 
     lateinit var mGivenFontTypeface: Typeface
+    lateinit var mDeviceFontTypeafce: Typeface
 
-    private fun equalOutput(str: String, tf: Typeface) : Boolean {
+    private fun equalOutput(str: String, deviceFont: Typeface, givenFont: Typeface) : Boolean {
         val devicePaint = TextPaint()
         devicePaint.textSize = 64f
-        devicePaint.typeface = Typeface.DEFAULT
+        devicePaint.typeface = deviceFont
 
         val givenPaint = TextPaint();
         givenPaint.textSize = devicePaint.textSize
-        givenPaint.typeface = tf
+        givenPaint.typeface = givenFont
 
         val deviceLayout = StaticLayout.Builder.obtain(str,0, str.length, devicePaint, Int.MAX_VALUE).build()
         val givenLayout = StaticLayout.Builder.obtain(str, 0, str.length, givenPaint, Int.MAX_VALUE).build()
@@ -43,11 +45,12 @@ class EmojiDiffActivity : AppCompatActivity() {
         if (deviceLayout.width != givenLayout.width)
             return false
 
-        val deviceBMP = Bitmap.createBitmap(deviceLayout.width, deviceLayout.height, Bitmap.Config.ARGB_8888)
+
+        val deviceBMP = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888)
         val deviceCanvas = Canvas(deviceBMP)
         deviceLayout.draw(deviceCanvas)
 
-        val givenBMP = Bitmap.createBitmap(deviceLayout.width, deviceLayout.height, Bitmap.Config.ARGB_8888)
+        val givenBMP = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888)
         val givenCanvas = Canvas(givenBMP)
         givenLayout.draw(givenCanvas)
 
@@ -68,6 +71,7 @@ class EmojiDiffActivity : AppCompatActivity() {
         }
 
         mGivenFontTypeface = PrivateTypeface.buildNoFallbackTypeface(fontFile)
+        mDeviceFontTypeafce = PrivateTypeface.buildNoFallbackTypeface("/system/fonts/NotoColorEmoji.ttf")
 
         setContentView(R.layout.emoji_list)
 
@@ -90,7 +94,7 @@ class EmojiDiffActivity : AppCompatActivity() {
                     holder.view.apply {
                         findViewById<TextView>(R.id.deviceFont).apply {
                             text = emoji.str + "\uFE0F"
-                            typeface = null
+                            typeface = mDeviceFontTypeafce
                         }
 
                         findViewById<TextView>(R.id.givenFont).apply {
@@ -109,7 +113,7 @@ class EmojiDiffActivity : AppCompatActivity() {
                         val sameStr = "No Diff"
 
                         findViewById<TextView>(R.id.result).apply {
-                            text = if (equalOutput(emoji.str + "\uFE0F", mGivenFontTypeface)) {
+                            text = if (equalOutput(emoji.str + "\uFE0F", mDeviceFontTypeafce, mGivenFontTypeface)) {
                                 sameStr
                             } else {
                                 diffStr
