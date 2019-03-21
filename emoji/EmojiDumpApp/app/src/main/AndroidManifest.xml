@@ -35,6 +35,17 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".EmojiDiffSelectorActivity"
+            android:label="Show Emoji Diff">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.example.emojidumpapp" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".EmojiDiffActivity">
+        </activity>
+
         <activity android:name=".EmojiListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
