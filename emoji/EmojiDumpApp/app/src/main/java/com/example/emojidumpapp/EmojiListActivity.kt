@@ -27,14 +27,18 @@ val EMOJI_LIST_FILTER_MAP = mapOf<String, (EmojiData) -> Boolean>(
     "Emoji_Modifier_Sequence" to { data -> data.props.contains("Emoji_Modifier_Sequence") },
     "Emoji_ZWJ_Sequence" to { data -> data.props.contains("Emoji_ZWJ_Sequence") },
     "Emojis hasGlyph false and gen != NA" to { data -> !PAINT.hasGlyph(data.str) && !data.generation.equals("NA")},
-    "Generation v12.0" to { data -> data.generation.equals("12.0") },
-    "Generation v11.0" to { data -> data.generation.equals("11.0") },
-    "Generation v10.0" to { data -> data.generation.equals("10.0") },
-    "Generation v9.0" to { data -> data.generation.equals("9.0") },
-    "Generation v8.0" to { data -> data.generation.equals("8.0") },
-    "Generation v7.0" to { data -> data.generation.equals("7.0") },
-    "Generation v6.1" to { data -> data.generation.equals("6.1") },
-    "Generation v6.0" to { data -> data.generation.equals("6.0") }
+    "Generation E13.0" to { data -> data.generation.equals("E13.0") },
+    "Generation E12.0" to { data -> data.generation.equals("E12.0") },
+    "Generation E11.0" to { data -> data.generation.equals("E11.0") },
+    "Generation E5.0" to { data -> data.generation.equals("E5.0") },
+    "Generation E4.0" to { data -> data.generation.equals("E4.0") },
+    "Generation E3.0" to { data -> data.generation.equals("E3.0") },
+    "Generation E2.0" to { data -> data.generation.equals("E2.0") },
+    "Generation E1.0" to { data -> data.generation.equals("E1.0") },
+    "Generation E0.7" to { data -> data.generation.equals("E0.7") },
+    "Generation E0.6" to { data -> data.generation.equals("E0.6") },
+    "Generation E0.0" to { data -> data.generation.equals("E0.0") }
+
 )
 
 class EmojiListActivity : AppCompatActivity() {

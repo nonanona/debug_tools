@@ -238,9 +238,9 @@ class UnicodeEmojiDataParser {
         }
 
         val FILE_PARSER = mapOf(
-            "emoji/12.0/emoji-data.txt" to { it : String -> EmojiDataParser.parseSegment(it) },
-            "emoji/12.0/emoji-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) },
-            "emoji/12.0/emoji-zwj-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) }
+            "emoji/13.1/emoji-data.txt" to { it : String -> EmojiDataParser.parseSegment(it) },
+            "emoji/13.1/emoji-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) },
+            "emoji/13.1/emoji-zwj-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) }
         )
 
         fun parse(asset: AssetManager) : List<EmojiData> {
