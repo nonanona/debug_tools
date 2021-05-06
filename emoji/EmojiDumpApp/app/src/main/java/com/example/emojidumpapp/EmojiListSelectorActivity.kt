@@ -1,14 +1,11 @@
 package com.example.emojidumpapp
 
-import android.app.Activity
 import android.app.ListActivity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.ListView
 import android.widget.SimpleAdapter
-import com.example.emojidumpapp.util.ucd.EmojiData
 
 class EmojiListSelectorActivity : ListActivity() {
 
@@ -30,6 +27,7 @@ class EmojiListSelectorActivity : ListActivity() {
                 putExtra("filter", it)
             }))
         }
+
         return result
     }
 }

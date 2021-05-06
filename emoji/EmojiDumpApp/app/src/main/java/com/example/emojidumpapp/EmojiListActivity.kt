@@ -1,5 +1,6 @@
 package com.example.emojidumpapp
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
@@ -21,11 +22,11 @@ val EMOJI_LIST_FILTER_MAP = mapOf<String, (EmojiData) -> Boolean>(
     "Emoji and Emoji_Presentation" to { data -> data.props.contains("Emoji") && data.props.contains("Emoji_Presentation") },
     "Emoji but Not Emoji_Presentation" to { data -> data.props.contains("Emoji") && !data.props.contains("Emoji_Presentation") },
     "Extended_Pictographic" to { data -> data.props.contains("Extended_Pictographic") },
-    "Emoji_Flag_Sequence" to { data -> data.props.contains("Emoji_Flag_Sequence") },
-    "Emoji_Keycap_Sequence" to { data -> data.props.contains("Emoji_Keycap_Sequence") },
-    "Emoji_Tag_Sequence" to { data -> data.props.contains("Emoji_Tag_Sequence") },
-    "Emoji_Modifier_Sequence" to { data -> data.props.contains("Emoji_Modifier_Sequence") },
-    "Emoji_ZWJ_Sequence" to { data -> data.props.contains("Emoji_ZWJ_Sequence") },
+    "Basic Emoji" to { data -> data.props.contains("Basic_Emoji")},
+    "Emoji Keycap Sequence" to { data -> data.props.contains("Emoji_Keycap_Sequence")},
+    "RGI Emoji Flag Sequence" to { data -> data.props.contains("RGI_Emoji_Flag_Sequence")},
+    "RGI Emoji Tag Sequence" to { data -> data.props.contains("RGI_Emoji_Tag_Sequence")},
+    "RGI Emoji Modifier Sequence" to { data -> data.props.contains("RGI_Emoji_Modifier_Sequence")},
     "Emojis hasGlyph false and gen != NA" to { data -> !PAINT.hasGlyph(data.str) && !data.generation.equals("NA")},
     "Generation E13.0" to { data -> data.generation.equals("E13.0") },
     "Generation E12.0" to { data -> data.generation.equals("E12.0") },
@@ -82,7 +83,7 @@ class EmojiListActivity : AppCompatActivity() {
         val filteredEmojis = UnicodeEmoji.getEmojiData(this).filter { filter(it) }
 
         emojiList.apply {
-            layoutManager = GridLayoutManager(this@EmojiListActivity, 8)
+            layoutManager = GridLayoutManager(this@EmojiListActivity, 6)
 
             adapter = object : RecyclerView.Adapter<Holder>() {
                 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -97,6 +98,9 @@ class EmojiListActivity : AppCompatActivity() {
 
                     holder.view.apply {
                         text = emoji.str
+                        setBackgroundColor(
+                            if (PAINT.hasGlyph(emoji.str)) Color.TRANSPARENT else Color.LTGRAY
+                        )
                         setOnLongClickListener {
                             AlertDialog.Builder(this@EmojiListActivity).apply {
                                 setView(makeEmojiDetails(emoji))
