@@ -51,7 +51,7 @@ fun parseCodePoint(str: String) : List<Int> {
     return str.toUpperCase().split("\\s+|U\\+".toRegex())
             .map { it.filter { it.isDigit() || ('A' <= it && it <= 'F') } }
             .filter { it.isNotEmpty() }
-            .filter { it.length <= 5 }
+            .filter { it.length <= 6 }
             .map { it.toInt(16) }
             .filter { 0 <= it && it <= 0x10FFFF }
 }
