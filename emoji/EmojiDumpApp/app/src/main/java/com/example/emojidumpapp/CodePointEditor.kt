@@ -166,7 +166,7 @@ class CodePointEditor : Activity() {
                 object : GestureDetector.SimpleOnGestureListener() {
             override fun onDoubleTap(e: MotionEvent): Boolean {
                 val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                clipboard.primaryClip = ClipData.newPlainText("code points", codePointsEdit.text.toString())
+                //clipboard.primaryClip = ClipData.newPlainText("code points", codePointsEdit.text.toString())
                 Toast.makeText(this@CodePointEditor, "Copied to clipboard", Toast.LENGTH_SHORT).show()
                 return true
             }
@@ -178,7 +178,7 @@ class CodePointEditor : Activity() {
                 object : GestureDetector.SimpleOnGestureListener() {
                     override fun onDoubleTap(e: MotionEvent): Boolean {
                         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                        clipboard.primaryClip = ClipData.newPlainText("code points", utf16UnitsEdit.text.toString())
+                        //clipboard.primaryClip = ClipData.newPlainText("code points", utf16UnitsEdit.text.toString())
                         Toast.makeText(this@CodePointEditor, "Copied to clipboard", Toast.LENGTH_SHORT).show()
                         return true
                     }

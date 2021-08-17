@@ -2,6 +2,8 @@ package com.example.emojidumpapp
 
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.text.TextRunShaper
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +31,8 @@ val EMOJI_LIST_FILTER_MAP = mapOf<String, (EmojiData) -> Boolean>(
     "RGI Emoji Modifier Sequence" to { data -> data.props.contains("RGI_Emoji_Modifier_Sequence")},
     "RGI Emoji ZWJ Sequence" to { data -> data.props.contains("RGI_Emoji_ZWJ_Sequence")},
     "Emojis hasGlyph false and gen != NA" to { data -> !PAINT.hasGlyph(data.str) && !data.generation.equals("NA")},
+    "Generation E14.0" to { data -> data.generation.equals("E14.0") },
+    "Generation E13.1" to { data -> data.generation.equals("E13.1") },
     "Generation E13.0" to { data -> data.generation.equals("E13.0") },
     "Generation E12.0" to { data -> data.generation.equals("E12.0") },
     "Generation E11.0" to { data -> data.generation.equals("E11.0") },
@@ -51,6 +55,11 @@ class EmojiListActivity : AppCompatActivity() {
         return (this.layoutInflater.inflate(R.layout.emoji_details, null) as ViewGroup).apply {
             findViewById<ViewGroup>(R.id.container).apply {
                 findViewById<TextView>(R.id.emojiIcon).text = emoji.str
+            }
+
+            findViewById<ViewGroup>(R.id.container2).apply {
+
+                val paint = Paint()
 
                 addView(this@EmojiListActivity.layoutInflater.inflate(R.layout.emoji_details_line, null).apply {
                     findViewById<TextView>(R.id.textView).text =
@@ -66,8 +75,21 @@ class EmojiListActivity : AppCompatActivity() {
                 })
                 addView(this@EmojiListActivity.layoutInflater.inflate(R.layout.emoji_details_line, null).apply {
                     findViewById<TextView>(R.id.textView).text =
-                        "hasGlyph: ${Paint().hasGlyph(emoji.str)}"
+                        "hasGlyph: ${paint.hasGlyph(emoji.str)}"
                 })
+                if (Build.VERSION.SDK_INT >=31 && paint.hasGlyph(emoji.str)) {
+                    val glyphs = TextRunShaper.shapeTextRun(
+                        emoji.str, 0, emoji.str.length, 0, emoji.str.length, 0f, 0f, false, paint)
+
+                    addView(this@EmojiListActivity.layoutInflater.inflate(R.layout.emoji_details_line, null).apply {
+                        findViewById<TextView>(R.id.textView).text = "Source: " + glyphs.getFont(0).file
+                    })
+
+                    addView(this@EmojiListActivity.layoutInflater.inflate(R.layout.emoji_details_line, null).apply {
+                        findViewById<TextView>(R.id.textView).text = "Glyph ID: " + glyphs.getGlyphId(0)
+                    })
+
+                }
             }
         }
     }
@@ -100,7 +122,7 @@ class EmojiListActivity : AppCompatActivity() {
                     holder.view.apply {
                         text = emoji.str
                         setBackgroundColor(
-                            if (PAINT.hasGlyph(emoji.str)) Color.TRANSPARENT else Color.LTGRAY
+                            if (Build.VERSION.SDK_INT >=23 && !PAINT.hasGlyph(emoji.str)) Color.LTGRAY else Color.TRANSPARENT
                         )
                         setOnLongClickListener {
                             AlertDialog.Builder(this@EmojiListActivity).apply {

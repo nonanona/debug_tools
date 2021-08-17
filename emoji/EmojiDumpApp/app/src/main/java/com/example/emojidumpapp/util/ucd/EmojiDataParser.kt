@@ -237,16 +237,18 @@ class UnicodeEmojiDataParser {
             return result
         }
 
+        val UNICODE_VERSION = "14.0.0"
+
         val FILE_PARSER = mapOf(
-            "emoji/13.1/emoji-data.txt" to { it : String -> EmojiDataParser.parseSegment(it) },
-            "emoji/13.1/emoji-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) },
-            "emoji/13.1/emoji-zwj-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) }
+            "emoji/$UNICODE_VERSION/emoji-data.txt" to { it : String -> EmojiDataParser.parseSegment(it) },
+            "emoji/$UNICODE_VERSION/emoji-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) },
+            "emoji/$UNICODE_VERSION/emoji-zwj-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) }
         )
 
         fun parse(asset: AssetManager) : List<EmojiData> {
             val tmp = mutableListOf<SegmentData>()
 
-            FILE_PARSER.forEach{ file, parser ->
+            FILE_PARSER.forEach{ (file, parser) ->
                 asset.open(file).use {
                     it.bufferedReader().use {
                         it.readText().split(SEGMENT_SEPARATOR).forEach {

@@ -46,7 +46,6 @@ fun codePointsToUtf16(codePoints: List<Int>) : List<Char> {
 
 fun codePointsToString(codePoints: List<Int>) : String = String(codePoints.toIntArray(), 0, codePoints.size)
 
-
 fun parseCodePoint(str: String) : List<Int> {
     return str.toUpperCase().split("\\s+|U\\+".toRegex())
             .map { it.filter { it.isDigit() || ('A' <= it && it <= 'F') } }

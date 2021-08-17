@@ -17,5 +17,21 @@
             android:id="@+id/emojiIcon"
             android:textSize="32sp"
         />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/container2"
+                android:orientation="vertical"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
+            </LinearLayout>
+        </HorizontalScrollView>
     </LinearLayout>
+
 </FrameLayout>
