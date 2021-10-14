@@ -1,5 +1,8 @@
 package com.example.emojidumpapp
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.text.TextRunShaper
@@ -128,6 +131,11 @@ class EmojiListActivity : AppCompatActivity() {
                             AlertDialog.Builder(this@EmojiListActivity).apply {
                                 setView(makeEmojiDetails(emoji))
                                 setPositiveButton("OK", null)
+                                setNeutralButton("Copy", { dialog, id ->
+                                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                    val clip = ClipData.newPlainText("emojoi", emoji.str)
+                                    clipboard.setPrimaryClip(clip)
+                                })
                             }.show()
                             return@setOnLongClickListener false
                         }
