@@ -73,11 +73,11 @@ class EmojiDiffActivity : AppCompatActivity() {
                             if (mDeviceFontPaint.hasGlyph(emoji.str)) {
                                 text = emoji.str
                                 typeface = mDeviceFontTypeafce
-                                setBackgroundColor(Color.WHITE)
+                                //setBackgroundColor(Color.WHITE)
                             } else {
                                 text = NO_GLYPH
                                 typeface = Typeface.DEFAULT
-                                setBackgroundColor(Color.GRAY)
+                                //setBackgroundColor(Color.GRAY)
                             }
 
                         }
@@ -86,11 +86,11 @@ class EmojiDiffActivity : AppCompatActivity() {
                             if (mGivenFontPaint.hasGlyph(emoji.str)) {
                                 text = emoji.str
                                 typeface = mGivenFontTypeface
-                                setBackgroundColor(Color.WHITE)
+                                //setBackgroundColor(Color.WHITE)
                             } else {
                                 text = NO_GLYPH
                                 typeface = Typeface.DEFAULT
-                                setBackgroundColor(Color.GRAY)
+                                //setBackgroundColor(Color.GRAY)
 
                             }
                         }
