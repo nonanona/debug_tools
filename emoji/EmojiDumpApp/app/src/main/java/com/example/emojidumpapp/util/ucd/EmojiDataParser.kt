@@ -1,6 +1,7 @@
 package com.example.emojidumpapp.util.ucd
 
 import android.content.res.AssetManager
+import android.util.Log
 import java.io.InputStream
 import java.lang.RuntimeException
 import java.lang.StringBuilder
@@ -240,7 +241,10 @@ class UnicodeEmojiDataParser {
         val FILE_PARSER = mapOf(
             "emoji/emoji-data.txt" to { it : String -> EmojiDataParser.parseSegment(it) },
             "emoji/emoji-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) },
-            "emoji/emoji-zwj-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) }
+            "emoji/emoji-zwj-sequences.txt" to { it : String -> EmojiSequencesParser.parseSegment(it) },
+            "emoji/emoji-variation-sequences.txt" to {
+                it : String -> EmojiVariationSequenceParser.parseSegment(it)
+            }
         )
 
         fun parse(asset: AssetManager) : List<EmojiData> {
@@ -257,6 +261,43 @@ class UnicodeEmojiDataParser {
             }
 
             return mergeSements(tmp)
+        }
+    }
+}
+
+// Parser for emoji-sequences.txt
+private class EmojiVariationSequenceParser {
+    internal companion object {
+        private data class LineData(val cps: List<Int>, val prop: String, val generation: String)
+
+        private val prop = "EmojiVariationSequence"
+        fun parseLine(line: String) : LineData? {
+            // The line look like
+            // 0023 FE0E  ; text style;  # (1.1) NUMBER SIGN
+            val tokens = line.split(";|#".toRegex())
+            val generation = "N/A"
+
+            val cpStr = tokens[0].trim()
+
+            val cps = cpStr.split(" ").map{ it.toInt(16) }
+            return LineData(cps, prop, generation)
+        }
+
+        fun parseSegment(str: String) : SegmentData? {
+            val result = mutableSetOf<Entry>()
+
+            str.split("\n").forEach {
+                if (it.isEmpty()) {
+                    // Skip the empty line
+                } else if (it[0] == '#') {  // comment line
+                    // Skip the empty line
+                } else {
+                    parseLine(it)?.let {
+                        result.add(Entry(it.cps, it.generation))
+                    }
+                }
+            }
+            return SegmentData(prop, result)
         }
     }
 }

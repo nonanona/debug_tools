@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.text.TextRunShaper
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -26,6 +27,7 @@ val EMOJI_LIST_FILTER_MAP = mapOf<String, (EmojiData) -> Boolean>(
     "Emoji" to { data -> data.props.contains("Emoji") },
     "Emoji and Emoji_Presentation" to { data -> data.props.contains("Emoji") && data.props.contains("Emoji_Presentation") },
     "Emoji but Not Emoji_Presentation" to { data -> data.props.contains("Emoji") && !data.props.contains("Emoji_Presentation") },
+    "Variation Sequences" to { data -> data.props.contains("EmojiVariationSequence")},
     "Extended_Pictographic" to { data -> data.props.contains("Extended_Pictographic") },
     "Basic Emoji" to { data -> data.props.contains("Basic_Emoji")},
     "Emoji Keycap Sequence" to { data -> data.props.contains("Emoji_Keycap_Sequence")},
