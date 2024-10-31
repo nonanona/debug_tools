@@ -8,7 +8,6 @@ import android.graphics.Paint
 import android.graphics.text.TextRunShaper
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emojidumpapp.util.ucd.EmojiData
 import com.example.emojidumpapp.util.ucd.UnicodeEmoji
-import kotlinx.android.synthetic.main.emoji_list.*
 
 val PAINT = Paint()
 
@@ -107,13 +105,11 @@ class EmojiListActivity : AppCompatActivity() {
         setContentView(R.layout.emoji_list)
 
         val filter = EMOJI_LIST_FILTER_MAP.get(intent.getStringExtra("filter"))
-        if (filter == null) {
-            throw RuntimeException("Unknown filter has passed:" + intent.getStringExtra("filter"))
-        }
+            ?: throw RuntimeException("Unknown filter has passed:" + intent.getStringExtra("filter"))
 
         val filteredEmojis = UnicodeEmoji.getEmojiData(this).filter { filter(it) }
 
-        emojiList.apply {
+        findViewById<RecyclerView>(R.id.emojiList).apply {
             layoutManager = GridLayoutManager(this@EmojiListActivity, 6)
 
             adapter = object : RecyclerView.Adapter<Holder>() {
@@ -136,11 +132,12 @@ class EmojiListActivity : AppCompatActivity() {
                             AlertDialog.Builder(this@EmojiListActivity).apply {
                                 setView(makeEmojiDetails(emoji))
                                 setPositiveButton("OK", null)
-                                setNeutralButton("Copy", { dialog, id ->
-                                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                    val clip = ClipData.newPlainText("emojoi", emoji.str)
+                                setNeutralButton("Copy") { _, _ ->
+                                    val clipboard =
+                                        getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                    val clip = ClipData.newPlainText("emoji", emoji.str)
                                     clipboard.setPrimaryClip(clip)
-                                })
+                                }
                             }.show()
                             return@setOnLongClickListener false
                         }

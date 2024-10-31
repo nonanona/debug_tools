@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Emoji List App</string>
+    <string name="title_activity_code_point_editor">CodePointEditor</string>
 </resources>
