@@ -92,7 +92,7 @@ private fun parseRange(str: String) : Range = if (str.contains("..")) {
 // Parser for emoji-data.txt
 private class EmojiDataParser {
     internal companion object {
-        private data class LineData(val range: Range, val prop: String, val generation: String)
+        data class LineData(val range: Range, val prop: String, val generation: String)
 
         fun parseLine(line: String) : LineData? {
             // The line look like
@@ -144,7 +144,7 @@ private class EmojiDataParser {
 // Parser for emoji-sequences.txt
 private class EmojiSequencesParser {
     internal companion object {
-        private data class LineData(val cps: List<List<Int>>, val prop: String, val generation: String)
+        data class LineData(val cps: List<List<Int>>, val prop: String, val generation: String)
 
         fun parseLine(line: String) : LineData? {
             // The line look like
@@ -268,7 +268,7 @@ class UnicodeEmojiDataParser {
 // Parser for emoji-sequences.txt
 private class EmojiVariationSequenceParser {
     internal companion object {
-        private data class LineData(val cps: List<Int>, val prop: String, val generation: String)
+        data class LineData(val cps: List<Int>, val prop: String, val generation: String)
 
         private val prop = "EmojiVariationSequence"
         fun parseLine(line: String) : LineData? {

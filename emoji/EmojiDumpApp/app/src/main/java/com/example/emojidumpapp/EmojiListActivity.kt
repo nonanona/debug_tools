@@ -36,6 +36,7 @@ val EMOJI_LIST_FILTER_MAP = mapOf<String, (EmojiData) -> Boolean>(
     "RGI Emoji Modifier Sequence" to { data -> data.props.contains("RGI_Emoji_Modifier_Sequence")},
     "RGI Emoji ZWJ Sequence" to { data -> data.props.contains("RGI_Emoji_ZWJ_Sequence")},
     "Emojis hasGlyph false and gen != NA" to { data -> !PAINT.hasGlyph(data.str) && !data.generation.equals("NA")},
+    "Generation E16.0" to { data -> data.generation.equals("E16.0") },
     "Generation E15.1" to { data -> data.generation.equals("E15.1") },
     "Generation E15.0" to { data -> data.generation.equals("E15.0") },
     "Generation E14.0" to { data -> data.generation.equals("E14.0") },
