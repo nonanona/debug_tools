@@ -134,7 +134,7 @@ def buildComponent(num, hmtx):
 
   larget_glyph_id = '%s.7seg' % digits[largest_digit_index]
   (_, overall_lsb) = hmtx[larget_glyph_id]
-  return (components, advance, overall_lsb)
+  return (components, glyph_advance, overall_lsb)
 
 def generate_font(template, pua, axis_tag, out_ttx, out_ttf):
   ttf = TTFont()
