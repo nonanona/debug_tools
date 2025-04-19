@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+  <style>
+@font-face {
+  font-family: weightFont;
+  src: url(weight.ttf);
+}
+
+@font-face {
+  font-family: widthFont;
+  src: url(width.ttf);
+}
+
+p {
+  font-size: 5rem;
+  margin-block: 2rem;
+}
+
+.weight {
+  animation: weight 5000ms infinite ease-in-out alternate both;
+}
+
+.flexFont {
+  font-family: "Roboto Flex", sans-serif;
+}
+
+.weightFont {
+  font-family: weightFont, sans-serif;
+}
+
+.widthFont {
+  font-family: widthFont, sans-serif;
+}
+
+input[type="range"] {
+  width: calc(100% - 180px);
+  vertical-align: middle;
+  margin-right: 5px;
+}
+  </style>
+</head>
+<body>
+  <p id="variable-text" class="flexFont">Hello, World</p>
+  <p id="weight-text" class="weightFont">weight = &#xF0000;</p>
+  <p id="width-text" class="widthFont">width = &#xF0001;</p>
+  <div>
+    <label for="wght-slider">Weight:</label>
+    <input type="range" id="wght-slider" name="wght" min="0" max="1000" step="1" value="400">
+    <span class="value-display" id="wght-value">400</span>
+  </div>
+  <div>
+    <label for="wdth-slider">Width:</label>
+    <input type="range" id="wdth-slider" name="wdth" min="0" max="200" step="1" value="100">
+    <span class="value-display" id="wdth-value">100</span>
+  </div>
+  <script>
+
+    const textElements = [
+      document.getElementById('variable-text'),
+      document.getElementById('weight-text'),
+      document.getElementById('width-text'),
+    ]
+    const wghtSlider = document.getElementById('wght-slider');
+    const wghtValueDisplay = document.getElementById('wght-value');
+    const wdthSlider = document.getElementById('wdth-slider');
+    const wdthValueDisplay = document.getElementById('wdth-value');
+
+    function updateVariationSettings(params) {
+      const variationSettings = [];
+      const allowedAxisTagLength = 4;
+
+      for (const [key, value] of params.entries()) {
+        variationSettings.push(`'${key}' ${parseFloat(value)}`);
+      }
+
+      const settingsString = variationSettings.join(',');
+      textElements.forEach((e) => {e.style.fontVariationSettings = settingsString;})
+      console.log(settingsString);
+    }
+
+    function handleSliderInput() {
+      const currentWght = wghtSlider.value;
+      wghtValueDisplay.textContent = currentWght;
+
+      const currentWdth = wdthSlider.value;
+      wdthValueDisplay.textContent = currentWdth;
+
+      const m = new Map();
+      m.set('wght', currentWght)
+      m.set('wdth', currentWdth)
+      updateVariationSettings(m);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      wghtSlider.addEventListener('input', handleSliderInput);
+      wdthSlider.addEventListener('input', handleSliderInput);
+    });
+  </script>
+</body>
+</html>

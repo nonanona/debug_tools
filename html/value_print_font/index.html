@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+
+<style>
+@font-face {
+  font-family: weightFont;
+  src: url(weight.ttf);
+}
+
+@font-face {
+  font-family: widthFont;
+  src: url(width.ttf);
+}
+
+div {
+  font-size: 5rem;
+  margin-block: 2rem;
+}
+
+.animation {
+  animation: weight 5000ms infinite ease-in-out alternate both;
+}
+
+.flexFont {
+  font-family: "Roboto Flex", sans-serif;
+}
+
+.weightFont {
+  font-family: weightFont, sans-serif;
+}
+
+.widthFont {
+  font-family: widthFont, sans-serif;
+}
+@keyframes weight {
+  0% {
+    font-variation-settings: "wght" 0, "wdth" 25;
+  }
+
+  100% {
+    font-variation-settings: "wght" 1000, "wdth" 150;
+  }
+}
+
+</style>
+  </head>
+
+  <body>
+    <div class="flexFont animation">Hello, World.</div>
+    <div class="weightFont animation">weight = &#xF0000;</div>
+    <div class="widthFont animation">width = &#xF0001;</div>
+  </body>
+</html>
