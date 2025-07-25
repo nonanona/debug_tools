@@ -14,6 +14,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emojidumpapp.util.ucd.EmojiData
@@ -34,6 +36,7 @@ val EMOJI_LIST_FILTER_MAP = mapOf<String, (EmojiData) -> Boolean>(
     "RGI Emoji Modifier Sequence" to { data -> data.props.contains("RGI_Emoji_Modifier_Sequence")},
     "RGI Emoji ZWJ Sequence" to { data -> data.props.contains("RGI_Emoji_ZWJ_Sequence")},
     "Emojis hasGlyph false and gen != NA" to { data -> !PAINT.hasGlyph(data.str) && !data.generation.equals("NA")},
+    "Generation E17.0" to { data -> data.generation.equals("E17.0") },
     "Generation E16.0" to { data -> data.generation.equals("E16.0") },
     "Generation E15.1" to { data -> data.generation.equals("E15.1") },
     "Generation E15.0" to { data -> data.generation.equals("E15.0") },
@@ -103,6 +106,12 @@ class EmojiListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.emoji_list)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         val filter = EMOJI_LIST_FILTER_MAP.get(intent.getStringExtra("filter"))
             ?: throw RuntimeException("Unknown filter has passed:" + intent.getStringExtra("filter"))
